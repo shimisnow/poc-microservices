@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GetUserParamsDto } from './dtos/get-user-params.dto';
 import { CreateUserBodyDto } from './dtos/create-user-body.dto';
 import { GetUserSerializer } from './serializers/get-user.serializer';
@@ -8,12 +9,14 @@ import { DeleteUserParamsDto } from './dtos/delete-user-params.dto';
 import { CreateUserSerializer } from './serializers/create-user.serializer';
 import { EditUserSerializer } from './serializers/edit-user.serializer';
 import { DeleteUserSerializer } from './serializers/delete-user.serializer';
-import { ApiOkResponse } from '@nestjs/swagger';
-import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger/dist';
+import { UsersService } from './users.service';
 
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
+  constructor(
+    private readonly usersService: UsersService,
+  ) {}
 
   @Get(':uuid')
   @ApiOperation({
@@ -24,7 +27,7 @@ export class UsersController {
     type: GetUserSerializer,
   })
   getUser(@Param() params: GetUserParamsDto): GetUserSerializer {
-    return;
+    return this.usersService.getUser(params.uuid);
   }
 
   @Post()
@@ -32,11 +35,11 @@ export class UsersController {
     summary: 'Creates an user',
   })
   @ApiCreatedResponse({
-    description: 'UUID for the create user',
+    description: 'Information about the created user',
     type: CreateUserSerializer,
   })
   createUser(@Body() body: CreateUserBodyDto): CreateUserSerializer {
-    return;
+    return this.usersService.createUser(body);
   }
 
   @Patch(':uuid')
@@ -48,7 +51,7 @@ export class UsersController {
     type: EditUserSerializer,
   })
   editUser(@Param() params: EditUserParamsDto, @Body() body: EditUserBodyDto): EditUserSerializer {
-    return;
+    return this.usersService.editUser(params.uuid, body);
   }
 
   @Delete(':uuid')
@@ -59,7 +62,7 @@ export class UsersController {
     description: 'Information if the delete operation was performed',
     type: DeleteUserSerializer,
   })
-  delete(@Param() params: DeleteUserParamsDto): DeleteUserSerializer {
-    return;
+  deleteUser(@Param() params: DeleteUserParamsDto): DeleteUserSerializer {
+    return this.usersService.deleteUser(params.uuid);
   }
 }

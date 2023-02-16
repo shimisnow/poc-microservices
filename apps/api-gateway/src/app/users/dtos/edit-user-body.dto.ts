@@ -1,12 +1,26 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { GeolocationPoint } from '@shared/types/geolocation-point';
+import { IsEmail, IsString, ValidateNested } from 'class-validator';
 
 export class EditUserBodyDto {
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'User name',
     example: 'Thomas A. Anderson',
   })
-  @IsNotEmpty()
   @IsString()
-  name: string;
+  name?: string;
+
+  @ApiPropertyOptional({
+    description: 'User email',
+    example: 'thomas.anderson@matrix.ai',
+  })
+  @IsEmail()
+  email?: string;
+
+  @ApiPropertyOptional({
+    description: 'User geographic location',
+    type: GeolocationPoint,
+  })
+  @ValidateNested()
+  location?: GeolocationPoint;
 }

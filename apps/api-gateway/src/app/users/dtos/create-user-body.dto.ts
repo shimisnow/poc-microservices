@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator/types/decorator/decorators';
+import { IsEmail, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
+import { GeolocationPoint } from '@shared/types/geolocation-point';
 
 export class CreateUserBodyDto {
   @ApiProperty({
@@ -9,4 +10,20 @@ export class CreateUserBodyDto {
   @IsNotEmpty()
   @IsString()
   name: string;
+
+  @ApiProperty({
+    description: 'User email',
+    example: 'thomas.anderson@matrix.ai',
+  })
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
+
+  @ApiProperty({
+    description: 'User geographic location',
+    type: GeolocationPoint,
+  })
+  @IsNotEmpty()
+  @ValidateNested()
+  location: GeolocationPoint;
 }
