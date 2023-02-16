@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  openapi:
+    image: redocly/redoc:v2.0.0
+    container_name: openapi
+    restart: always
+    environment:
+      SPEC_URL: openapi-docs.json
+      REDOC_OPTIONS: "sort-tags-alphabetically path-in-middle-panel required-props-first side-nav-style='path-only'"
+    ports:
+      - 8081:80
+    volumes:
+      - ./apps/api-gateway/docs/openapi/openapi-docs.json:/usr/share/nginx/html/openapi-docs.json:ro
