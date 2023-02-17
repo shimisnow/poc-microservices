@@ -1,4 +1,4 @@
-import { Inject, Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { BadGatewayException, ConflictException, Inject, Injectable, InternalServerErrorException, NotFoundException, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { StreamingPlatform } from '@shared/streaming/config';
 import { firstValueFrom } from 'rxjs';
@@ -16,6 +16,7 @@ import { UserEditPayload } from '@shared/payloads/user-edit.payload';
 import { UserEditResponse } from '@shared/responses/user-edit.response';
 import { UserDeletePayload } from '@shared/payloads/user-delete.payload';
 import { UserDeleteResponse } from '@shared/responses/user-delete.response';
+import { ErrorsEnum } from '@shared/enums/errors.enum';
 
 @Injectable()
 export class UsersService implements OnModuleInit, OnModuleDestroy {
@@ -50,8 +51,14 @@ export class UsersService implements OnModuleInit, OnModuleDestroy {
     if(response.performed) {
       return response.data as GetUserSerializer;
     } else {
-      console.log(response);
-      return null;
+      switch(response.error.code) {
+        case ErrorsEnum.NOT_FOUND:
+          throw new NotFoundException();
+        case ErrorsEnum.BAD_GATEWAY:
+          throw new BadGatewayException(response.error.message);
+        default:
+          throw new InternalServerErrorException(response.error.message);
+      }
     }
   }
 
@@ -70,8 +77,14 @@ export class UsersService implements OnModuleInit, OnModuleDestroy {
     if(response.performed) {
       return response.data as CreateUserSerializer;
     } else {
-      console.log(response);
-      return null;
+      switch(response.error.code) {
+        case ErrorsEnum.CONFLICT:
+          throw new ConflictException();
+        case ErrorsEnum.BAD_GATEWAY:
+          throw new BadGatewayException(response.error.message);
+        default:
+          throw new InternalServerErrorException(response.error.message);
+      }
     }
   }
 
@@ -91,8 +104,14 @@ export class UsersService implements OnModuleInit, OnModuleDestroy {
     if(response.performed) {
       return response as EditUserSerializer;
     } else {
-      console.log(response);
-      return null;
+      switch(response.error.code) {
+        case ErrorsEnum.NOT_FOUND:
+          throw new NotFoundException();
+        case ErrorsEnum.BAD_GATEWAY:
+          throw new BadGatewayException(response.error.message);
+        default:
+          throw new InternalServerErrorException(response.error.message);
+      }
     }
   }
 
@@ -111,8 +130,14 @@ export class UsersService implements OnModuleInit, OnModuleDestroy {
     if(response.performed) {
       return response as DeleteUserSerializer;
     } else {
-      console.log(response);
-      return null;
+      switch(response.error.code) {
+        case ErrorsEnum.NOT_FOUND:
+          throw new NotFoundException();
+        case ErrorsEnum.BAD_GATEWAY:
+          throw new BadGatewayException(response.error.message);
+        default:
+          throw new InternalServerErrorException(response.error.message);
+      }
     }
   }
 }

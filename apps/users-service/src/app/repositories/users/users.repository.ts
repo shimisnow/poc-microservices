@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { UserEntity } from '@shared/database/entities/user.entity';
@@ -12,7 +12,7 @@ export class UserRepository {
   ) {}
 
   async findByUUID(uuid: string): Promise<UserEntity> {
-    return await this.usersRepository.findOne({
+    return await this.usersRepository.findOneOrFail({
       where: {
         uuid,
       },
@@ -25,12 +25,22 @@ export class UserRepository {
   }
 
   async update(uuid: string, entity: Partial<UserEntity>): Promise<boolean> {
-    await this.usersRepository.update({ uuid }, entity);
-    return true;
+    const result: UpdateResult = await this.usersRepository.update({ uuid }, entity);
+    
+    if(result.affected > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   async delete(uuid: string): Promise<boolean> {
-    await this.usersRepository.delete({ uuid });
-    return true;
+    const result: DeleteResult = await this.usersRepository.delete({ uuid });
+    
+    if(result.affected > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
