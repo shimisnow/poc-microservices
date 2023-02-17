@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { uuid as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 import { UserCreatePayload } from '@shared/payloads/user-create.payload';
 import { UserEditPayload } from '@shared/payloads/user-edit.payload';
@@ -45,10 +45,12 @@ export class AppService {
         ...data.entity,
       })
 
+      response.performed = true;
       response.data = {
         uuid,
       }
     } catch (error) {
+      console.log(error);
       response.error = error;
     }
 

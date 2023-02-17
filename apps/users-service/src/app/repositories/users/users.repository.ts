@@ -12,7 +12,7 @@ export class UserRepository {
   ) {}
 
   async findByUUID(uuid: string): Promise<UserEntity> {
-    return await this.usersRepository.findOneOrFail({
+    return await this.usersRepository.findOne({
       where: {
         uuid,
       },

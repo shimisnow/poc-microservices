@@ -38,8 +38,8 @@ export class UsersController {
     description: 'Information about the created user',
     type: CreateUserSerializer,
   })
-  createUser(@Body() body: CreateUserBodyDto): CreateUserSerializer {
-    return this.usersService.createUser(body);
+  async createUser(@Body() body: CreateUserBodyDto): Promise<CreateUserSerializer> {
+    return await this.usersService.createUser(body);
   }
 
   @Patch(':uuid')
@@ -50,8 +50,8 @@ export class UsersController {
     description: 'Information if the edit operation was performed',
     type: EditUserSerializer,
   })
-  editUser(@Param() params: EditUserParamsDto, @Body() body: EditUserBodyDto): EditUserSerializer {
-    return this.usersService.editUser(params.uuid, body);
+  async editUser(@Param() params: EditUserParamsDto, @Body() body: EditUserBodyDto): Promise<EditUserSerializer> {
+    return await this.usersService.editUser(params.uuid, body);
   }
 
   @Delete(':uuid')
@@ -62,7 +62,7 @@ export class UsersController {
     description: 'Information if the delete operation was performed',
     type: DeleteUserSerializer,
   })
-  deleteUser(@Param() params: DeleteUserParamsDto): DeleteUserSerializer {
-    return this.usersService.deleteUser(params.uuid);
+  async deleteUser(@Param() params: DeleteUserParamsDto): Promise<DeleteUserSerializer> {
+    return await this.usersService.deleteUser(params.uuid);
   }
 }
