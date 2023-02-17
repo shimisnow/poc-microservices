@@ -2,35 +2,15 @@
 
 ## Getting started
 
-#### Deploying the database and Apache Kafka
+This project is a backend REST API for a simple microservice strategy created to demonstrate my abilities in backend development.
 
-```shell
-docker compose up -d database zookeeper broker kafka-ui
-```
+The API provides endpoints for managing users (get, create, update,  and delete). It also includes a docker-compose file to deploy the Postgres database, Apache Kafka, Kafka UI and ReDoc using Docker containers.
 
-#### Executing the api-gateway
+The database is implemented using Postgres with TypeORM. The API is built using Node.js and NestJS, providing a scalable and robust solution for handling requests.
 
-```shell
-nx serve api-gateway
-```
+Overall, this project demonstrates my ability to design, develop, and deploy a backend API using modern and widely-used technologies.
 
-The REST API will be available at `http://localhost:3333/api`
-
-#### Executing the user-service
-
-```shell
-nx serve user-service
-```
-
-#### Access the documentation
-
-```shell
-docker compose up -d openapi
-```
-
-The REST API documentation will be available at `http://localhost:8080`
-
-## Tecnologies
+The following technologies was used:
 
 - Transfer architectural
   - REST API
@@ -56,3 +36,31 @@ The REST API documentation will be available at `http://localhost:8080`
 
 - Others
   - Docker (to deploy database, kafka, end documentation servers)
+
+
+
+## Deploying Postgres and Apache Kafka
+
+```shell
+docker compose up -d database zookeeper broker kafka-ui
+```
+
+## Executing the api-gateway and the user-service
+
+```shell
+nx serve user-service
+```
+
+```shell
+nx serve api-gateway
+```
+
+The REST API will be available at `http://localhost:3333/api`
+
+## Access the documentation
+
+```shell
+docker compose up -d openapi
+```
+
+The REST API documentation will be available at `http://localhost:8080`
