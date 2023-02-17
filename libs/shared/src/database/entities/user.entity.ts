@@ -37,15 +37,17 @@ export class UserEntity {
     transformer: {
       to: (value) => {
         if(value !== null) {
-          return `(${value.latitute},${value.longitude})`;
+          return `POINT(${value.latitute} ${value.longitude})`;
         }
         return null;
       },
       from: (value) => {
         if(value !== null) {
-          return {
-            latitude: value.y,
-            longitude: value.x,
+          if(Array.isArray(value.coordinates)) {
+            return {
+              latitude: value.coordinates[1],
+              longitude: value.coordinates[0],
+            }
           }
         }
         return null;
