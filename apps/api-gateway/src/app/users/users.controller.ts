@@ -26,8 +26,8 @@ export class UsersController {
     description: 'Information about the required user',
     type: GetUserSerializer,
   })
-  getUser(@Param() params: GetUserParamsDto): GetUserSerializer {
-    return this.usersService.getUser(params.uuid);
+  async getUser(@Param() params: GetUserParamsDto): Promise<GetUserSerializer> {
+    return await this.usersService.getUser(params.uuid);
   }
 
   @Post()

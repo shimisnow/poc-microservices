@@ -7,7 +7,7 @@ import { UserGetResponse } from '@shared/responses/user-get.response';
 import { UserCreateResponse } from '@shared/responses/user-create.response';
 import { UserEditResponse } from '@shared/responses/user-edit.response';
 import { UserDeleteResponse } from '@shared/responses/user-delete.response';
-import { UserRepository } from './repositories/users.repository';
+import { UserRepository } from './repositories/users/users.repository';
 
 
 @Injectable()
