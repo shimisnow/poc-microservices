@@ -4,6 +4,9 @@ import { UsersService } from './users.service';
 import { ClientKafkaMock } from './mocks/client-kafka.mock';
 import { GetUserSerializer } from './serializers/get-user.serializer';
 import { ConflictException, NotFoundException } from '@nestjs/common';
+import { CreateUserSerializer } from './serializers/create-user.serializer';
+import { EditUserSerializer } from './serializers/edit-user.serializer';
+import { DeleteUserSerializer } from './serializers/delete-user.serializer';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -30,7 +33,7 @@ describe('UsersController', () => {
   describe('(users.controller) -> getUser()', () => {
     describe('Expect WITHOUT errors', () => {
       test('User exists (7537c8bd-c71c-4164-a7bb-8935769eef94)', async () => {
-        const response = await controller.getUser({
+        const response: GetUserSerializer = await controller.getUser({
           uuid: '7537c8bd-c71c-4164-a7bb-8935769eef94',
         });
         
@@ -56,7 +59,7 @@ describe('UsersController', () => {
   describe('(users.controller) -> createUser()', () => {
     describe('Expect WITHOUT errors', () => {
       test('Create user (unit-test-001@jest.com)', async () => {
-        const response = await controller.createUser({
+        const response: CreateUserSerializer = await controller.createUser({
           name: 'Thomas A. Anderson',
           email: 'unit-test-001@jest.com',
           location: {
@@ -91,7 +94,7 @@ describe('UsersController', () => {
   describe('(users.controller) -> editUser()', () => {
     describe('Expect WITHOUT errors', () => {
       test('Edit user that exists (7537c8bd-c71c-4164-a7bb-8935769eef94)', async () => {
-        const response = await controller.editUser({
+        const response: EditUserSerializer = await controller.editUser({
           uuid: '7537c8bd-c71c-4164-a7bb-8935769eef94',
         }, {});
         
@@ -116,7 +119,7 @@ describe('UsersController', () => {
   describe('(users.controller) -> deleteUser()', () => {
     describe('Expect WITHOUT errors', () => {
       test('Delete user that exists (7537c8bd-c71c-4164-a7bb-8935769eef94)', async () => {
-        const response = await controller.deleteUser({
+        const response: DeleteUserSerializer = await controller.deleteUser({
           uuid: '7537c8bd-c71c-4164-a7bb-8935769eef94',
         });
         

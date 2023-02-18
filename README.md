@@ -56,15 +56,15 @@ An OpenAPI json file can be found at: [openapi-docs.json](apps/api-gateway/docs/
 
 ## Test
 
-### API Gateway
+| Service       | Command                     | Coverage | Mocks        |
+| :---          | :---                        | :---     | :---         |
+| API Gateway   | `npx nx test api-gateway`   | `>90%`   | Apache Kafka |
+| Users service | `npx nx test users-service` | `>90%`     | TypeORM      |
 
-The service can be tested with the command:
+- The `10%` without coverage in API Gateway is from code used to control Kafka that does not needed to be mocked.
+- The `10%` without coverage in Users service is from code used to deal with TypeORM exception for strange database errors and does not needed to be mocked.
 
-```shell
-npx nx test api-gateway
-```
-
-The service has a coverage of `>90%` and the remaining `10%` is from code used to control Kafka that does not needed to be mocked. The coverage results can be found at `coverage/apps/api-gateway/`.
+The coverage results can be found at `coverage/` directory.
 
 ## Deploying
 
