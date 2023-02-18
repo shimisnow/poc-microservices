@@ -23,8 +23,7 @@ This project is composed of two services:
   - Messaging pattern with [Apache Kafka](https://kafka.apache.org/)
 
 - Code organization
-  - Monorepo with shared code
-  - [Nx](https://nx.dev/)
+  - Monorepo with [Nx](https://nx.dev/)
   - Git
 
 - Backend
@@ -37,11 +36,10 @@ This project is composed of two services:
   - [TypeORM](https://typeorm.io/) (with transformers)
 
 - Tests
-  - Jest (TO-DO)
+  - Jest (>90% coverage)
 
 - Documentation
   - [OpenAPI](https://www.openapis.org/)
-  - [Compodoc](https://compodoc.app/) (TO-DO)
 
 - Others
   - Docker (to deploy the application, database, kafka, and documentation servers)
@@ -54,17 +52,25 @@ A postman collection with automated data generation can be found at: [POC-MICROS
 
 An OpenAPI json file can be found at: [openapi-docs.json](apps/api-gateway/docs/openapi/openapi-docs.json)
 
-## Test
+## Tests
 
-| Service       | Command                     | Coverage | Mocks        |
-| :---          | :---                        | :---     | :---         |
-| API Gateway   | `npx nx test api-gateway`   | `>90%`   | Apache Kafka |
-| Users service | `npx nx test users-service` | `>90%`     | TypeORM      |
+The services are tested at the controller level and the tests can be found at:
+- API Gateway: [users.controller.spec.ts](apps/api-gateway/src/app/users/users.controller.spec.ts)
+  - It uses a mock for the Apache Kafka defined at [client-kafka.mock.ts](apps/api-gateway/src/app/users/mocks/client-kafka.mock.ts)
+- User service: [app.controller.spec.ts](apps/users-service/src/app/app.controller.spec.ts)
+  - It uses a mock for the TypeORM repository defined at [user-repository.mock.ts](apps/users-service/src/app/mocks/user-repository.mock.ts)
 
+| Service       | Command                     | Coverage |
+| :---          | :---                        | :---     |
+| API Gateway   | `npx nx test api-gateway`   | `>90%`   |
+| Users service | `npx nx test users-service` | `>90%`   |
+
+The coverage results can be found at `coverage/` directory.
+
+Observations:
 - The `10%` without coverage in API Gateway is from code used to control Kafka that does not needed to be mocked.
 - The `10%` without coverage in Users service is from code used to deal with TypeORM exception for strange database errors and does not needed to be mocked.
 
-The coverage results can be found at `coverage/` directory.
 
 ## Deploying
 
