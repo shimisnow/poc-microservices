@@ -21,7 +21,7 @@ import { ErrorsEnum } from '@shared/enums/errors.enum';
 @Injectable()
 export class UsersService implements OnModuleInit, OnModuleDestroy {
   constructor(
-    @Inject('USER_SERVICE') private readonly userClient: ClientKafka,
+    @Inject('USERS_SERVICE') private readonly userClient: ClientKafka,
   ) {}
 
   async onModuleInit() {
