@@ -1,18 +1,24 @@
 # Microservices POC
 
-## Getting started
-
 This project is a backend REST API for a simple microservice strategy created to demonstrate my abilities in backend development.
 
-The API provides endpoints for managing users (get, create, update,  and delete). It also includes a docker-compose file to deploy the Postgres database, Apache Kafka, Kafka UI and ReDoc using Docker containers.
+The API provides endpoints for managing users (get, create, update, and delete). It also includes a docker-compose file to deploy the Postgres database, Apache Kafka, Kafka UI and ReDoc using Docker containers.
 
 The database is implemented using Postgres with TypeORM. The API is built using Node.js and NestJS, providing a scalable and robust solution for handling requests.
 
 Overall, this project demonstrates my ability to design, develop, and deploy a backend API using modern and widely-used technologies.
 
-The following technologies was used:
+## Architecture
 
-- Transfer architectural
+This project is composed of two services:
+1. API GATEWAY responsible to all external communications.
+2. USERS SERVICE responsible to perform all actions related to the entity user.
+
+![Project architecture](docs/images/architecture.png)
+
+## Technologies
+
+- Transfer architecture
   - REST API
   - Messaging pattern with [Apache Kafka](https://kafka.apache.org/)
 
@@ -27,37 +33,54 @@ The following technologies was used:
   - TypeScript
 
 - Database
-  - Postgres with [Postgis](https://postgis.net/)
+  - Postgres with [Postgis](https://postgis.net/) extension
   - [TypeORM](https://typeorm.io/) (with transformers)
+
+- Tests
+  - Jest (TO-DO)
 
 - Documentation
   - [OpenAPI](https://www.openapis.org/)
   - [Compodoc](https://compodoc.app/) (TO-DO)
 
 - Others
-  - Docker (to deploy database, kafka, end documentation servers)
+  - Docker (to deploy the application, database, kafka, and documentation servers)
+  - Prettier, ESLint
+  - GeoJSON
 
+## Postman collection and API documentation
 
+A postman collection with automated data generation can be found at: [POC-MICROSERVICES.postman_collection.json](docs/postman/POC-MICROSERVICES.postman_collection.json)
 
-## Deploying Postgres and Apache Kafka
+An OpenAPI json file can be found at: [openapi-docs.json](apps/api-gateway/docs/openapi/openapi-docs.json)
+
+## Deploying
+
+### Postgres and Apache Kafka (with UI)
 
 ```shell
 docker compose up -d database zookeeper broker kafka-ui
 ```
 
-## Executing the api-gateway and the user-service
+Postgres will be available at port 5432 and configured with:
+- User: postgres
+- Password: 1234567890
+- Database: postgres
+
+Apache Kafka will be configured with:
+- Broker at port 9092
+- Kafka UI at port 8088
+
+### Api-gateway and Users-service
 
 ```shell
-nx serve user-service
-```
-
-```shell
-nx serve api-gateway
+npx nx serve users-service
+npx nx serve api-gateway
 ```
 
 The REST API will be available at `http://localhost:3333/api`
 
-## Access the documentation
+### Documentation
 
 ```shell
 docker compose up -d openapi
