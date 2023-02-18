@@ -54,6 +54,18 @@ A postman collection with automated data generation can be found at: [POC-MICROS
 
 An OpenAPI json file can be found at: [openapi-docs.json](apps/api-gateway/docs/openapi/openapi-docs.json)
 
+## Test
+
+### API Gateway
+
+The service can be tested with the command:
+
+```shell
+npx nx test api-gateway
+```
+
+The service has a coverage of `>90%` and the remaining `10%` is from code used to control Kafka that does not needed to be mocked. The coverage results can be found at `coverage/apps/api-gateway/`.
+
 ## Deploying
 
 ### Postgres and Apache Kafka (with UI)

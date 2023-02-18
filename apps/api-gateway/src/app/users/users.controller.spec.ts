@@ -4,7 +4,6 @@ import { UsersService } from './users.service';
 import { ClientKafkaMock } from './mocks/client-kafka.mock';
 import { GetUserSerializer } from './serializers/get-user.serializer';
 import { ConflictException, NotFoundException } from '@nestjs/common';
-import exp from 'constants';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -117,9 +116,9 @@ describe('UsersController', () => {
   describe('(users.controller) -> deleteUser()', () => {
     describe('Expect WITHOUT errors', () => {
       test('Delete user that exists (7537c8bd-c71c-4164-a7bb-8935769eef94)', async () => {
-        const response = await controller.editUser({
+        const response = await controller.deleteUser({
           uuid: '7537c8bd-c71c-4164-a7bb-8935769eef94',
-        }, {});
+        });
         
         expect(response).toHaveProperty('performed');
         expect(response.performed).toBeTruthy();
@@ -129,9 +128,9 @@ describe('UsersController', () => {
     describe('Expect WITH errors', () => {
       test('Delete user that does not exists (7537c8bd-c71c-4164-a7bb-8935769eef95)', async () => {
         try {
-          await controller.editUser({
+          await controller.deleteUser({
           uuid: '7537c8bd-c71c-4164-a7bb-8935769eef95',
-        }, {});
+        });
         } catch (error) {
           expect(error).toBeInstanceOf(NotFoundException);
         }

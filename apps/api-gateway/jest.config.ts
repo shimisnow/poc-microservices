@@ -12,5 +12,10 @@ export default {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
+  collectCoverage: true,
+  coverageReporters: ['json', 'html'],
   coverageDirectory: '../../coverage/apps/api-gateway',
+  coveragePathIgnorePatterns: [
+    '<rootDir>/src/app/users/documentation/'
+  ],
 };
