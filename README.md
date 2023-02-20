@@ -42,7 +42,7 @@ This project is composed of two services:
   - [OpenAPI](https://www.openapis.org/)
 
 - Others
-  - Docker (to deploy the application, database, kafka, and documentation servers)
+  - Docker and Docker Compose
   - Prettier, ESLint
   - GeoJSON
 
