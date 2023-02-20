@@ -71,6 +71,14 @@ Observations:
 - The `10%` without coverage in API Gateway is from code used to control Kafka that does not needed to be mocked.
 - The `10%` without coverage in Users service is from code used to deal with TypeORM exception for strange database errors and does not needed to be mocked.
 
+## Running the code
+
+```shell
+npx nx serve users-service
+npx nx serve api-gateway
+```
+
+The REST API will be available at `http://localhost:3333/api`
 
 ## Deploying
 
@@ -91,9 +99,20 @@ Apache Kafka will be configured with:
 
 ### Api-gateway and Users-service
 
+First, it it necessary to build the Docker images for each service with the commands:
+
 ```shell
-npx nx serve users-service
-npx nx serve api-gateway
+docker compose build base-image
+docker compose build api-gateway
+docker compose build users-service
+```
+
+`base-image` is a image with the node_modules folder. It is generate only one time to be used in all services build.
+
+The services can be started with:
+
+```shell
+docker compose up -d api-gateway users-service
 ```
 
 The REST API will be available at `http://localhost:3333/api`
