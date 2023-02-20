@@ -11,22 +11,19 @@ import { UserDeleteResponse } from '@shared/responses/user-delete.response';
 import { UserRepository } from './repositories/users/users.repository';
 import { ErrorsEnum } from '@shared/enums/errors.enum';
 
-
 @Injectable()
 export class AppService {
-  constructor(
-    private readonly userRepository: UserRepository,
-  ) {}
+  constructor(private readonly userRepository: UserRepository) {}
 
   async getUser(uuid: string): Promise<UserGetResponse> {
     const response: UserGetResponse = {
       performed: false,
-    }
+    };
 
     try {
       const result = await this.userRepository.findByUUID(uuid);
 
-      if(result) {
+      if (result) {
         response.performed = true;
         response.data = result;
       } else {
@@ -42,7 +39,7 @@ export class AppService {
   async createUser(data: UserCreatePayload): Promise<UserCreateResponse> {
     const response: UserCreateResponse = {
       performed: false,
-    }
+    };
 
     try {
       const uuid = uuidv4();
@@ -50,12 +47,12 @@ export class AppService {
       await this.userRepository.insert({
         uuid,
         ...data.entity,
-      })
+      });
 
       response.performed = true;
       response.data = {
         uuid,
-      }
+      };
     } catch (error) {
       response.error = DatabaseErrorManager.errorToResponse(error);
     }
@@ -66,17 +63,20 @@ export class AppService {
   async editUser(data: UserEditPayload): Promise<UserEditResponse> {
     const response: UserEditResponse = {
       performed: false,
-    }
+    };
 
     try {
-      const result: boolean = await this.userRepository.update(data.uuid, data.entity);
+      const result: boolean = await this.userRepository.update(
+        data.uuid,
+        data.entity
+      );
 
-      if(result) {
+      if (result) {
         response.performed = true;
       } else {
         response.error = {
           code: ErrorsEnum.NOT_FOUND,
-        }
+        };
       }
     } catch (error) {
       response.error = DatabaseErrorManager.errorToResponse(error);
@@ -88,17 +88,17 @@ export class AppService {
   async deleteUser(uuid: string): Promise<UserDeleteResponse> {
     const response: UserDeleteResponse = {
       performed: false,
-    }
+    };
 
     try {
       const result: boolean = await this.userRepository.delete(uuid);
-      
-      if(result) {
+
+      if (result) {
         response.performed = true;
       } else {
         response.error = {
           code: ErrorsEnum.NOT_FOUND,
-        }
+        };
       }
     } catch (error) {
       response.error = DatabaseErrorManager.errorToResponse(error);

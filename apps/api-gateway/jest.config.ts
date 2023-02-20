@@ -15,7 +15,5 @@ export default {
   collectCoverage: true,
   coverageReporters: ['json', 'html'],
   coverageDirectory: '../../coverage/apps/api-gateway',
-  coveragePathIgnorePatterns: [
-    '<rootDir>/src/app/users/documentation/'
-  ],
+  coveragePathIgnorePatterns: ['<rootDir>/src/app/users/documentation/'],
 };

@@ -36,29 +36,26 @@ export class UserEntity {
     nullable: false,
     transformer: {
       to: (value) => {
-        if(value !== null) {
+        if (value !== null) {
           return {
             type: 'Point',
-            coordinates: [
-              value.longitude,
-              value.latitude,
-            ]
+            coordinates: [value.longitude, value.latitude],
           };
         }
         return null;
       },
       from: (value) => {
-        if(value !== null) {
-          if(Array.isArray(value.coordinates)) {
+        if (value !== null) {
+          if (Array.isArray(value.coordinates)) {
             return {
               latitude: value.coordinates[1],
               longitude: value.coordinates[0],
-            }
+            };
           }
         }
         return null;
-      }, 
-    }
+      },
+    },
   })
   location: GeolocationPoint;
 }

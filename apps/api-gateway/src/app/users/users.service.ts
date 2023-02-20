@@ -1,4 +1,13 @@
-import { BadGatewayException, ConflictException, Inject, Injectable, InternalServerErrorException, NotFoundException, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import {
+  BadGatewayException,
+  ConflictException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+  OnModuleDestroy,
+  OnModuleInit,
+} from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { StreamingPlatform } from '@shared/streaming/config';
 import { firstValueFrom } from 'rxjs';
@@ -21,14 +30,13 @@ import { ErrorsEnum } from '@shared/enums/errors.enum';
 @Injectable()
 export class UsersService implements OnModuleInit, OnModuleDestroy {
   constructor(
-    @Inject('USERS_SERVICE') private readonly userClient: ClientKafka,
+    @Inject('USERS_SERVICE') private readonly userClient: ClientKafka
   ) {}
 
   async onModuleInit() {
-    Object.values(StreamingPlatform.topics.USER)
-      .forEach((topic) => {
-        this.userClient.subscribeToResponseOf(topic);
-      });
+    Object.values(StreamingPlatform.topics.USER).forEach((topic) => {
+      this.userClient.subscribeToResponseOf(topic);
+    });
     await this.userClient.connect();
   }
 
@@ -44,14 +52,14 @@ export class UsersService implements OnModuleInit, OnModuleDestroy {
     const response: UserGetResponse = await firstValueFrom(
       this.userClient.send(
         StreamingPlatform.topics.USER.GET,
-        JSON.stringify(payload),
-      ),
+        JSON.stringify(payload)
+      )
     );
 
-    if(response.performed) {
+    if (response.performed) {
       return response.data as GetUserSerializer;
     } else {
-      switch(response.error.code) {
+      switch (response.error.code) {
         case ErrorsEnum.NOT_FOUND:
           throw new NotFoundException();
         case ErrorsEnum.BAD_GATEWAY:
@@ -65,19 +73,19 @@ export class UsersService implements OnModuleInit, OnModuleDestroy {
   async createUser(user: CreateUserBodyDto): Promise<CreateUserSerializer> {
     const payload: UserCreatePayload = {
       entity: user,
-    }
+    };
 
     const response: UserCreateResponse = await firstValueFrom(
       this.userClient.send(
         StreamingPlatform.topics.USER.CREATE,
-        JSON.stringify(payload),
+        JSON.stringify(payload)
       )
     );
 
-    if(response.performed) {
+    if (response.performed) {
       return response.data as CreateUserSerializer;
     } else {
-      switch(response.error.code) {
+      switch (response.error.code) {
         case ErrorsEnum.CONFLICT:
           throw new ConflictException();
         case ErrorsEnum.BAD_GATEWAY:
@@ -88,7 +96,10 @@ export class UsersService implements OnModuleInit, OnModuleDestroy {
     }
   }
 
-  async editUser(uuid: string, body: EditUserBodyDto): Promise<EditUserSerializer> {
+  async editUser(
+    uuid: string,
+    body: EditUserBodyDto
+  ): Promise<EditUserSerializer> {
     const payload: UserEditPayload = {
       uuid,
       entity: body,
@@ -97,14 +108,14 @@ export class UsersService implements OnModuleInit, OnModuleDestroy {
     const response: UserEditResponse = await firstValueFrom(
       this.userClient.send(
         StreamingPlatform.topics.USER.EDIT,
-        JSON.stringify(payload),
-      ),
+        JSON.stringify(payload)
+      )
     );
 
-    if(response.performed) {
+    if (response.performed) {
       return response as EditUserSerializer;
     } else {
-      switch(response.error.code) {
+      switch (response.error.code) {
         case ErrorsEnum.NOT_FOUND:
           throw new NotFoundException();
         case ErrorsEnum.BAD_GATEWAY:
@@ -123,14 +134,14 @@ export class UsersService implements OnModuleInit, OnModuleDestroy {
     const response: UserDeleteResponse = await firstValueFrom(
       this.userClient.send(
         StreamingPlatform.topics.USER.DELETE,
-        JSON.stringify(payload),
-      ),
+        JSON.stringify(payload)
+      )
     );
 
-    if(response.performed) {
+    if (response.performed) {
       return response as DeleteUserSerializer;
     } else {
-      switch(response.error.code) {
+      switch (response.error.code) {
         case ErrorsEnum.NOT_FOUND:
           throw new NotFoundException();
         case ErrorsEnum.BAD_GATEWAY:

@@ -8,10 +8,8 @@ export const Environment = {
       database: 'postgres',
     },
     streaming: {
-      brokers: [
-        'broker:9092',
-      ]
-    }
+      brokers: ['broker:9092'],
+    },
   },
   deploy: {
     database: {
@@ -22,9 +20,7 @@ export const Environment = {
       database: 'postgres',
     },
     streaming: {
-      brokers: [
-        'broker:29092',
-      ]
-    }
-  }
-}
+      brokers: ['broker:29092'],
+    },
+  },
+};

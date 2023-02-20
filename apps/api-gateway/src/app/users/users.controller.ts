@@ -1,5 +1,23 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { ApiBadGatewayResponse, ApiBadRequestResponse, ApiConflictResponse, ApiCreatedResponse, ApiInternalServerErrorResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import {
+  ApiBadGatewayResponse,
+  ApiBadRequestResponse,
+  ApiConflictResponse,
+  ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { GetUserParamsDto } from './dtos/get-user-params.dto';
 import { CreateUserBodyDto } from './dtos/create-user-body.dto';
 import { GetUserSerializer } from './serializers/get-user.serializer';
@@ -19,9 +37,7 @@ import { CreateUserError409Serializer } from './documentation/create-user-error-
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(
-    private readonly usersService: UsersService,
-  ) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Get(':uuid')
   @ApiOperation({
@@ -40,7 +56,8 @@ export class UsersController {
     type: DefaultError404Serializer,
   })
   @ApiInternalServerErrorResponse({
-    description: 'The server has encountered a situation it does not know how to handle. See server logs for details',
+    description:
+      'The server has encountered a situation it does not know how to handle. See server logs for details',
     type: DefaultError500Serializer,
   })
   @ApiBadGatewayResponse({
@@ -68,14 +85,17 @@ export class UsersController {
     type: CreateUserError409Serializer,
   })
   @ApiInternalServerErrorResponse({
-    description: 'The server has encountered a situation it does not know how to handle. See server logs for details',
+    description:
+      'The server has encountered a situation it does not know how to handle. See server logs for details',
     type: DefaultError500Serializer,
   })
   @ApiBadGatewayResponse({
     description: 'Errors with database operations',
     type: DefaultError502Serializer,
   })
-  async createUser(@Body() body: CreateUserBodyDto): Promise<CreateUserSerializer> {
+  async createUser(
+    @Body() body: CreateUserBodyDto
+  ): Promise<CreateUserSerializer> {
     return await this.usersService.createUser(body);
   }
 
@@ -96,14 +116,18 @@ export class UsersController {
     type: DefaultError404Serializer,
   })
   @ApiInternalServerErrorResponse({
-    description: 'The server has encountered a situation it does not know how to handle. See server logs for details',
+    description:
+      'The server has encountered a situation it does not know how to handle. See server logs for details',
     type: DefaultError500Serializer,
   })
   @ApiBadGatewayResponse({
     description: 'Errors with database operations',
     type: DefaultError502Serializer,
   })
-  async editUser(@Param() params: EditUserParamsDto, @Body() body: EditUserBodyDto): Promise<EditUserSerializer> {
+  async editUser(
+    @Param() params: EditUserParamsDto,
+    @Body() body: EditUserBodyDto
+  ): Promise<EditUserSerializer> {
     return await this.usersService.editUser(params.uuid, body);
   }
 
@@ -124,14 +148,17 @@ export class UsersController {
     type: DefaultError404Serializer,
   })
   @ApiInternalServerErrorResponse({
-    description: 'The server has encountered a situation it does not know how to handle. See server logs for details',
+    description:
+      'The server has encountered a situation it does not know how to handle. See server logs for details',
     type: DefaultError500Serializer,
   })
   @ApiBadGatewayResponse({
     description: 'Errors with database operations',
     type: DefaultError502Serializer,
   })
-  async deleteUser(@Param() params: DeleteUserParamsDto): Promise<DeleteUserSerializer> {
+  async deleteUser(
+    @Param() params: DeleteUserParamsDto
+  ): Promise<DeleteUserSerializer> {
     return await this.usersService.deleteUser(params.uuid);
   }
 }

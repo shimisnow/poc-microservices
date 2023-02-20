@@ -11,16 +11,16 @@ export class DatabaseErrorManager {
 
     switch (error.constructor) {
       case QueryFailedError:
-        if(error.message.startsWith('duplicate key')) {
+        if (error.message.startsWith('duplicate key')) {
           response.code = ErrorsEnum.CONFLICT;
         } else {
           response.code = ErrorsEnum.BAD_GATEWAY;
           response.message = error.message;
         }
-      break;
+        break;
       case EntityNotFoundError:
         response.code = ErrorsEnum.NOT_FOUND;
-      break;
+        break;
       default:
         response.message = error.message;
     }

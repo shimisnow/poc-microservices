@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class DefaultError400Serializer {
   @ApiProperty({
@@ -9,11 +9,9 @@ export class DefaultError400Serializer {
 
   @ApiProperty({
     description: 'Validation error messages',
-    example: [
-      'uuid must be a UUID',
-    ],
+    example: ['uuid must be a UUID'],
   })
-  message: Array<string>
+  message: Array<string>;
 
   @ApiProperty({
     description: 'HTTP error message',

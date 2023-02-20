@@ -15,7 +15,5 @@ export default {
   collectCoverage: true,
   coverageReporters: ['json', 'html'],
   coverageDirectory: '../../coverage/apps/users-service',
-  coveragePathIgnorePatterns: [
-    '<rootDir>/src/app/repositories'
-  ],
+  coveragePathIgnorePatterns: ['<rootDir>/src/app/repositories'],
 };

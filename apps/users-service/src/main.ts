@@ -6,7 +6,7 @@ import { StreamingPlatform } from '@shared/streaming/config';
 
 async function bootstrap() {
   process.env.SERVER = process.env.SERVER || 'dev';
-  
+
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
     {

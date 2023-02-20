@@ -17,22 +17,30 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @MessagePattern(StreamingPlatform.topics.USER.GET)
-  async handleUserGet(@Payload() payload: UserGetPayload): Promise<UserGetResponse> {
+  async handleUserGet(
+    @Payload() payload: UserGetPayload
+  ): Promise<UserGetResponse> {
     return await this.appService.getUser(payload.uuid);
   }
 
   @MessagePattern(StreamingPlatform.topics.USER.CREATE)
-  async handleUserCreate(@Payload() payload: UserCreatePayload): Promise<UserCreateResponse> {
+  async handleUserCreate(
+    @Payload() payload: UserCreatePayload
+  ): Promise<UserCreateResponse> {
     return await this.appService.createUser(payload);
   }
 
   @MessagePattern(StreamingPlatform.topics.USER.EDIT)
-  async handleUserEdit(@Payload() payload: UserEditPayload): Promise<UserEditResponse> {
+  async handleUserEdit(
+    @Payload() payload: UserEditPayload
+  ): Promise<UserEditResponse> {
     return await this.appService.editUser(payload);
   }
 
   @MessagePattern(StreamingPlatform.topics.USER.DELETE)
-  async handleUserDelete(@Payload() payload: UserDeletePayload): Promise<UserDeleteResponse> {
+  async handleUserDelete(
+    @Payload() payload: UserDeletePayload
+  ): Promise<UserDeleteResponse> {
     return await this.appService.deleteUser(payload.uuid);
   }
 }

@@ -23,7 +23,7 @@ describe('AppController', () => {
         {
           provide: UserRepository,
           useClass: UserRepositoryMock,
-        }  
+        },
       ],
     }).compile();
 
@@ -68,8 +68,8 @@ describe('AppController', () => {
             location: {
               latitude: '-23.433982',
               longitude: '-46.476069',
-            }
-          }
+            },
+          },
         });
 
         expect(response).toHaveProperty('performed');
@@ -87,8 +87,8 @@ describe('AppController', () => {
             location: {
               latitude: '-23.433982',
               longitude: '-46.476069',
-            }
-          }
+            },
+          },
         });
 
         expect(response).toHaveProperty('performed');
@@ -106,7 +106,7 @@ describe('AppController', () => {
           entity: {
             name: 'Thomas A. Anderson',
             email: 'test-jest-001@jest.com',
-          }
+          },
         });
 
         expect(response).toHaveProperty('performed');
@@ -121,7 +121,7 @@ describe('AppController', () => {
           entity: {
             name: 'Thomas A. Anderson',
             email: 'test-jest-001@jest.com',
-          }
+          },
         });
 
         expect(response).toHaveProperty('performed');

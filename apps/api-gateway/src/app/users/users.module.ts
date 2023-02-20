@@ -23,6 +23,6 @@ import { StreamingPlatform } from '@shared/streaming/config';
     ]),
   ],
   controllers: [UsersController],
-  providers: [UsersService]
+  providers: [UsersService],
 })
 export class UsersModule {}

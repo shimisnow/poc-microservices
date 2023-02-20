@@ -12,7 +12,7 @@ describe('UsersService', () => {
         {
           provide: 'USERS_SERVICE',
           useClass: ClientKafkaMock,
-        }
+        },
       ],
     }).compile();
 

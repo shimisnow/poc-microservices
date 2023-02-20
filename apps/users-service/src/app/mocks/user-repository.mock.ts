@@ -5,11 +5,11 @@ export class UserRepositoryMock {
   /**
    * Returns an User for uuid '7b093ca2-dfe7-4f8e-8f90-76174a722bfd', throw EntityNotFoundError otherwise.
    *
-   * @param uuid 
-   * @returns 
+   * @param uuid
+   * @returns
    */
   async findByUUID(uuid: string): Promise<UserEntity> {
-    switch(uuid) {
+    switch (uuid) {
       case '7b093ca2-dfe7-4f8e-8f90-76174a722bfd':
         return {
           uuid: '7b093ca2-dfe7-4f8e-8f90-76174a722bfd',
@@ -18,7 +18,7 @@ export class UserRepositoryMock {
           location: {
             latitude: '-23.433982',
             longitude: '-46.476069',
-          }
+          },
         } as UserEntity;
       default:
         throw new EntityNotFoundError(UserEntity, null);
@@ -32,7 +32,7 @@ export class UserRepositoryMock {
    * @returns True if is updated, throw error otherwise.
    */
   async insert(entity: UserEntity): Promise<boolean> {
-    switch(entity.email) {
+    switch (entity.email) {
       case 'test-jest-001@jest.com':
         return true;
       default:
@@ -47,8 +47,9 @@ export class UserRepositoryMock {
    * @param entity User data.
    * @returns True if is updated, false otherwise (probably the user does not exists).
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async update(uuid: string, entity: Partial<UserEntity>): Promise<boolean> {
-    switch(uuid) {
+    switch (uuid) {
       case '7b093ca2-dfe7-4f8e-8f90-76174a722bfd':
         return true;
       case '7b093ca2-dfe7-4f8e-8f90-76174a722bf5':
@@ -65,7 +66,7 @@ export class UserRepositoryMock {
    * @returns True if is deleted, false otherwise (probably the user does not exists).
    */
   async delete(uuid: string): Promise<boolean> {
-    switch(uuid) {
+    switch (uuid) {
       case '7b093ca2-dfe7-4f8e-8f90-76174a722bfd':
         return true;
       case '7b093ca2-dfe7-4f8e-8f90-76174a722bf5':

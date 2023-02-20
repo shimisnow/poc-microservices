@@ -13,7 +13,7 @@ describe('AppService', () => {
         {
           provide: UserRepository,
           useValue: {},
-        }
+        },
       ],
     }).compile();
 

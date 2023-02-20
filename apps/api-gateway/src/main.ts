@@ -15,7 +15,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(port);
-  
+
   const config = new DocumentBuilder()
     .setTitle('API Documentation')
     .setDescription('')
@@ -24,7 +24,11 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
 
   await mkdirSync('apps/api-gateway/docs/openapi/', { recursive: true });
-  await writeFileSync('apps/api-gateway/docs/openapi/openapi-docs.json', JSON.stringify(document), { encoding: 'utf8' });
+  await writeFileSync(
+    'apps/api-gateway/docs/openapi/openapi-docs.json',
+    JSON.stringify(document),
+    { encoding: 'utf8' }
+  );
 }
 
 bootstrap();

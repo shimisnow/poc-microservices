@@ -18,6 +18,7 @@ export class ClientKafkaMock {
    * @param payload Input to test.
    * @returns Observable with the expected response for the topic.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   send(topic: string, payload: string): Observable<any> {
     switch (topic) {
       case StreamingPlatform.topics.USER.GET:
@@ -63,8 +64,8 @@ export class ClientKafkaMock {
 
   /**
    * Creates the user when email is 'unit-test-001@jest.com', otherwise will return a 'conflict error' simulating duplicated entity.
-   * @param payload 
-   * @returns 
+   * @param payload
+   * @returns
    */
   private sendTopicUserCreate(payload: UserCreatePayload): UserCreateResponse {
     switch (payload.entity.email) {

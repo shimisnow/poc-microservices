@@ -8,7 +8,7 @@ import { UserEntity } from '@shared/database/entities/user.entity';
 export class UserRepository {
   constructor(
     @InjectRepository(UserEntity)
-    private usersRepository: Repository<UserEntity>,
+    private usersRepository: Repository<UserEntity>
   ) {}
 
   async findByUUID(uuid: string): Promise<UserEntity> {
@@ -25,9 +25,12 @@ export class UserRepository {
   }
 
   async update(uuid: string, entity: Partial<UserEntity>): Promise<boolean> {
-    const result: UpdateResult = await this.usersRepository.update({ uuid }, entity);
-    
-    if(result.affected > 0) {
+    const result: UpdateResult = await this.usersRepository.update(
+      { uuid },
+      entity
+    );
+
+    if (result.affected > 0) {
       return true;
     } else {
       return false;
@@ -36,8 +39,8 @@ export class UserRepository {
 
   async delete(uuid: string): Promise<boolean> {
     const result: DeleteResult = await this.usersRepository.delete({ uuid });
-    
-    if(result.affected > 0) {
+
+    if (result.affected > 0) {
       return true;
     } else {
       return false;

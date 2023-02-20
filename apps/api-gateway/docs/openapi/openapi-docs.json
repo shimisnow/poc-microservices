@@ -1,1 +1,471 @@
-{"openapi":"3.0.0","paths":{"/api/users/{uuid}":{"get":{"operationId":"UsersController_getUser","summary":"Retrieves information about one user","parameters":[{"name":"uuid","required":true,"in":"path","description":"User id","example":"96c88771-b1b0-4454-94fd-93ddd1579c30","schema":{"type":"string"}}],"responses":{"200":{"description":"Information about the required user","content":{"application/json":{"schema":{"$ref":"#/components/schemas/GetUserSerializer"}}}},"400":{"description":"Error validating request input data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DefaultError400Serializer"}}}},"404":{"description":"The requested user does not exists","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DefaultError404Serializer"}}}},"500":{"description":"The server has encountered a situation it does not know how to handle. See server logs for details","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DefaultError500Serializer"}}}},"502":{"description":"Errors with database operations","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DefaultError502Serializer"}}}}},"tags":["users"]},"patch":{"operationId":"UsersController_editUser","summary":"Edits an user","parameters":[{"name":"uuid","required":true,"in":"path","description":"User id","example":"96c88771-b1b0-4454-94fd-93ddd1579c30","schema":{"type":"string"}}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/EditUserBodyDto"}}}},"responses":{"200":{"description":"Information if the edit operation was performed","content":{"application/json":{"schema":{"$ref":"#/components/schemas/EditUserSerializer"}}}},"400":{"description":"Error validating request input data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DefaultError400Serializer"}}}},"404":{"description":"The requested user does not exists","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DefaultError404Serializer"}}}},"500":{"description":"The server has encountered a situation it does not know how to handle. See server logs for details","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DefaultError500Serializer"}}}},"502":{"description":"Errors with database operations","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DefaultError502Serializer"}}}}},"tags":["users"]},"delete":{"operationId":"UsersController_deleteUser","summary":"Deletes an user","parameters":[{"name":"uuid","required":true,"in":"path","description":"User id","example":"96c88771-b1b0-4454-94fd-93ddd1579c30","schema":{"type":"string"}}],"responses":{"200":{"description":"Information if the delete operation was performed","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DeleteUserSerializer"}}}},"400":{"description":"Error validating request input data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DefaultError400Serializer"}}}},"404":{"description":"The requested user does not exists","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DefaultError404Serializer"}}}},"500":{"description":"The server has encountered a situation it does not know how to handle. See server logs for details","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DefaultError500Serializer"}}}},"502":{"description":"Errors with database operations","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DefaultError502Serializer"}}}}},"tags":["users"]}},"/api/users":{"post":{"operationId":"UsersController_createUser","summary":"Creates an user","parameters":[],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/CreateUserBodyDto"}}}},"responses":{"201":{"description":"Information about the created user","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CreateUserSerializer"}}}},"400":{"description":"Error validating request input data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DefaultError400Serializer"}}}},"409":{"description":"Some unique information for the user is already registered","content":{"application/json":{"schema":{"$ref":"#/components/schemas/CreateUserError409Serializer"}}}},"500":{"description":"The server has encountered a situation it does not know how to handle. See server logs for details","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DefaultError500Serializer"}}}},"502":{"description":"Errors with database operations","content":{"application/json":{"schema":{"$ref":"#/components/schemas/DefaultError502Serializer"}}}}},"tags":["users"]}}},"info":{"title":"API Documentation","description":"","version":"1.0","contact":{}},"tags":[],"servers":[],"components":{"schemas":{"GeolocationPoint":{"type":"object","properties":{"latitude":{"type":"string","description":"Geographic coordinate that specifies the north-south position of a point on the surface of the Earth","example":"-23.433981"},"longitude":{"type":"string","description":"Geographic coordinate that specifies the east-west position of a point on the surface of the Earth","example":"-46.476069"}},"required":["latitude","longitude"]},"GetUserSerializer":{"type":"object","properties":{"name":{"type":"string","description":"User name","example":"Thomas A. Anderson"},"email":{"type":"string","description":"User email","example":"thomas.anderson@matrix.ai"},"location":{"description":"User geographic location","allOf":[{"$ref":"#/components/schemas/GeolocationPoint"}]}},"required":["name","email","location"]},"DefaultError400Serializer":{"type":"object","properties":{"statusCode":{"type":"number","description":"HTTP code","example":400},"message":{"description":"Validation error messages","example":["uuid must be a UUID"],"type":"array","items":{"type":"string"}},"error":{"type":"string","description":"HTTP error message","example":"Bad Request"}},"required":["statusCode","message","error"]},"DefaultError404Serializer":{"type":"object","properties":{"statusCode":{"type":"number","description":"HTTP code","example":404},"message":{"type":"string","description":"HTTP error message","example":"Not Found"}},"required":["statusCode","message"]},"DefaultError500Serializer":{"type":"object","properties":{"statusCode":{"type":"number","description":"HTTP code","example":500},"message":{"type":"string","description":"Additional error message","example":"Cannot set properties of undefined"},"error":{"type":"string","description":"HTTP error message","example":"Internal Server Error"}},"required":["statusCode","message","error"]},"DefaultError502Serializer":{"type":"object","properties":{"statusCode":{"type":"number","description":"HTTP code","example":502},"message":{"type":"string","description":"HTTP error message","example":"Bad Gateway"}},"required":["statusCode","message"]},"CreateUserBodyDto":{"type":"object","properties":{"name":{"type":"string","description":"User name","example":"Thomas A. Anderson"},"email":{"type":"string","description":"User email","example":"thomas.anderson@matrix.ai"},"location":{"description":"User geographic location","allOf":[{"$ref":"#/components/schemas/GeolocationPoint"}]}},"required":["name","email","location"]},"CreateUserSerializer":{"type":"object","properties":{"uuid":{"type":"string","description":"User id","example":"96c88771-b1b0-4454-94fd-93ddd1579c30"}},"required":["uuid"]},"CreateUserError409Serializer":{"type":"object","properties":{"statusCode":{"type":"number","description":"HTTP code","example":409},"message":{"type":"string","description":"HTTP error message","example":"Conflict"}},"required":["statusCode","message"]},"EditUserBodyDto":{"type":"object","properties":{"name":{"type":"string","description":"User name","example":"Thomas A. Anderson"},"email":{"type":"string","description":"User email","example":"thomas.anderson@matrix.ai"},"location":{"description":"User geographic location","allOf":[{"$ref":"#/components/schemas/GeolocationPoint"}]}}},"EditUserSerializer":{"type":"object","properties":{}},"DeleteUserSerializer":{"type":"object","properties":{}}}}}
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/users/{uuid}": {
+      "get": {
+        "operationId": "UsersController_getUser",
+        "summary": "Retrieves information about one user",
+        "parameters": [
+          {
+            "name": "uuid",
+            "required": true,
+            "in": "path",
+            "description": "User id",
+            "example": "96c88771-b1b0-4454-94fd-93ddd1579c30",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Information about the required user",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/GetUserSerializer" }
+              }
+            }
+          },
+          "400": {
+            "description": "Error validating request input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError400Serializer"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested user does not exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError404Serializer"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server has encountered a situation it does not know how to handle. See server logs for details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError500Serializer"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Errors with database operations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError502Serializer"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["users"]
+      },
+      "patch": {
+        "operationId": "UsersController_editUser",
+        "summary": "Edits an user",
+        "parameters": [
+          {
+            "name": "uuid",
+            "required": true,
+            "in": "path",
+            "description": "User id",
+            "example": "96c88771-b1b0-4454-94fd-93ddd1579c30",
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EditUserBodyDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Information if the edit operation was performed",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/EditUserSerializer" }
+              }
+            }
+          },
+          "400": {
+            "description": "Error validating request input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError400Serializer"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested user does not exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError404Serializer"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server has encountered a situation it does not know how to handle. See server logs for details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError500Serializer"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Errors with database operations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError502Serializer"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["users"]
+      },
+      "delete": {
+        "operationId": "UsersController_deleteUser",
+        "summary": "Deletes an user",
+        "parameters": [
+          {
+            "name": "uuid",
+            "required": true,
+            "in": "path",
+            "description": "User id",
+            "example": "96c88771-b1b0-4454-94fd-93ddd1579c30",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Information if the delete operation was performed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteUserSerializer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error validating request input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError400Serializer"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested user does not exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError404Serializer"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server has encountered a situation it does not know how to handle. See server logs for details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError500Serializer"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Errors with database operations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError502Serializer"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["users"]
+      }
+    },
+    "/api/users": {
+      "post": {
+        "operationId": "UsersController_createUser",
+        "summary": "Creates an user",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateUserBodyDto" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Information about the created user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserSerializer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error validating request input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError400Serializer"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Some unique information for the user is already registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserError409Serializer"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The server has encountered a situation it does not know how to handle. See server logs for details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError500Serializer"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Errors with database operations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError502Serializer"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["users"]
+      }
+    }
+  },
+  "info": {
+    "title": "API Documentation",
+    "description": "",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "GeolocationPoint": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "string",
+            "description": "Geographic coordinate that specifies the north-south position of a point on the surface of the Earth",
+            "example": "-23.433981"
+          },
+          "longitude": {
+            "type": "string",
+            "description": "Geographic coordinate that specifies the east-west position of a point on the surface of the Earth",
+            "example": "-46.476069"
+          }
+        },
+        "required": ["latitude", "longitude"]
+      },
+      "GetUserSerializer": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "example": "Thomas A. Anderson"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "example": "thomas.anderson@matrix.ai"
+          },
+          "location": {
+            "description": "User geographic location",
+            "allOf": [{ "$ref": "#/components/schemas/GeolocationPoint" }]
+          }
+        },
+        "required": ["name", "email", "location"]
+      },
+      "DefaultError400Serializer": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "number",
+            "description": "HTTP code",
+            "example": 400
+          },
+          "message": {
+            "description": "Validation error messages",
+            "example": ["uuid must be a UUID"],
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "error": {
+            "type": "string",
+            "description": "HTTP error message",
+            "example": "Bad Request"
+          }
+        },
+        "required": ["statusCode", "message", "error"]
+      },
+      "DefaultError404Serializer": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "number",
+            "description": "HTTP code",
+            "example": 404
+          },
+          "message": {
+            "type": "string",
+            "description": "HTTP error message",
+            "example": "Not Found"
+          }
+        },
+        "required": ["statusCode", "message"]
+      },
+      "DefaultError500Serializer": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "number",
+            "description": "HTTP code",
+            "example": 500
+          },
+          "message": {
+            "type": "string",
+            "description": "Additional error message",
+            "example": "Cannot set properties of undefined"
+          },
+          "error": {
+            "type": "string",
+            "description": "HTTP error message",
+            "example": "Internal Server Error"
+          }
+        },
+        "required": ["statusCode", "message", "error"]
+      },
+      "DefaultError502Serializer": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "number",
+            "description": "HTTP code",
+            "example": 502
+          },
+          "message": {
+            "type": "string",
+            "description": "HTTP error message",
+            "example": "Bad Gateway"
+          }
+        },
+        "required": ["statusCode", "message"]
+      },
+      "CreateUserBodyDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "example": "Thomas A. Anderson"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "example": "thomas.anderson@matrix.ai"
+          },
+          "location": {
+            "description": "User geographic location",
+            "allOf": [{ "$ref": "#/components/schemas/GeolocationPoint" }]
+          }
+        },
+        "required": ["name", "email", "location"]
+      },
+      "CreateUserSerializer": {
+        "type": "object",
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "description": "User id",
+            "example": "96c88771-b1b0-4454-94fd-93ddd1579c30"
+          }
+        },
+        "required": ["uuid"]
+      },
+      "CreateUserError409Serializer": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "number",
+            "description": "HTTP code",
+            "example": 409
+          },
+          "message": {
+            "type": "string",
+            "description": "HTTP error message",
+            "example": "Conflict"
+          }
+        },
+        "required": ["statusCode", "message"]
+      },
+      "EditUserBodyDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "example": "Thomas A. Anderson"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "example": "thomas.anderson@matrix.ai"
+          },
+          "location": {
+            "description": "User geographic location",
+            "allOf": [{ "$ref": "#/components/schemas/GeolocationPoint" }]
+          }
+        }
+      },
+      "EditUserSerializer": { "type": "object", "properties": {} },
+      "DeleteUserSerializer": { "type": "object", "properties": {} }
+    }
+  }
+}
