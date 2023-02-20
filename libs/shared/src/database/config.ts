@@ -1,9 +1,7 @@
+import { Environment } from '../environment/config';
+
+const SERVER = process.env.SERVER;
+
 export const DatabasePlatform = {
-  config: {
-    host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: '1234567890',
-    database: 'postgres',
-  }
+  config: Environment[SERVER].database,
 };

@@ -6,6 +6,8 @@ import { mkdirSync, writeFileSync } from 'fs';
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {
+  process.env.SERVER = process.env.SERVER || 'dev';
+
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);

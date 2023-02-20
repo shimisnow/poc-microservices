@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { StreamingPlatform } from '@shared/streaming/config';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         options: {
           client: {
             clientId: 'user',
-            brokers: ['localhost:9092'],
+            brokers: StreamingPlatform.brokers,
           },
           consumer: {
             groupId: 'user-consumer',
